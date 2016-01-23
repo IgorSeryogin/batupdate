@@ -1,7 +1,7 @@
 #!/bin/sh -e
 ##################################################################################
 # B.A.T.M.A.N. Advanced Automated Installaion and Update Script. GOSH, 2013
-# v2015012802
+# v2016012302
 ##################################################################################
 
 WORK_DIR="/tmp/batman-build"
@@ -76,7 +76,7 @@ CheckBatctlVersion () {
 
 CheckBatmanAdvVersion () {
     BATMAN_ADV_VERSION=`modinfo batman-adv | grep ^version | cut -d" " -f9`
-    local VALIDATION=`echo "$BATMAN_ADV_VERSION" | grep -E "^[0-9]{4}\.[0-9]\.[0-9]$"`
+    local VALIDATION=`echo "$BATMAN_ADV_VERSION" | grep -E "^[0-9]{4}\.[0-9]$"`
     if [ -z "$VALIDATION" ];
        then BATMAN_ADV_VERSION="NA";
     fi
