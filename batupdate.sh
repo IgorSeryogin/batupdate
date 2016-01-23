@@ -189,33 +189,30 @@ InstallBatctl () {
 InstallBatmanAdv () {
     BATMAN_ADV_URL=http://downloads.open-mesh.org/batman/releases/batman-adv-$ACTUAL_VERSION/batman-adv-$ACTUAL_VERSION.tar.gz
     if [ "$BATMAN_ADV_VERSION" = "$ACTUAL_VERSION" ]; 
-       then
-         EchoGreen "Batman-adv OK!";
-       else
-         EchoRed "Batman-adv updating..."
-         Done
-         Init
-         sudo wget -qO $WORK_DIR/batman-adv.tar.gz $BATMAN_ADV_URL
-         cd $WORK_DIR
-         sudo tar -xf batman-adv.tar.gz
-         cd $WORK_DIR/batman-adv-$ACTUAL_VERSION
-         sudo make -j $CPU_THREADS $BATMAN_ADV_OPTIONS
-         sudo make $BATMAN_ADV_OPTIONS install
-#      sudo mkdir -p /lib/modules/`uname -r`/updates/net/batman-adv/
-#      sudo cp batman-adv.ko /lib/modules/`uname -r`/updates/net/batman-adv/batman-adv.ko
-#      sudo depmod -a
-         sudo rmmod batman-adv
-         sudo modprobe batman-adv
-         cd $PWD
-         Done
+        then
+            EchoGreen "Batman-adv OK!";
+        else
+            EchoRed "Batman-adv updating..."
+            Done
+            Init
+            sudo wget -qO $WORK_DIR/batman-adv.tar.gz $BATMAN_ADV_URL
+            cd $WORK_DIR
+            sudo tar -xf batman-adv.tar.gz
+            cd $WORK_DIR/batman-adv-$ACTUAL_VERSION
+            sudo make -j $CPU_THREADS $BATMAN_ADV_OPTIONS
+            sudo make $BATMAN_ADV_OPTIONS install
+            sudo rmmod batman-adv
+            sudo modprobe batman-adv
+            cd $PWD
+            Done
     fi
     local MOD=`cat /etc/modules | grep batman-adv`
     if [ -z "$MOD" ];
-       then
-         EchoRed "Setting up kernel module autoload..."
-         echo "echo "batman-adv" >> /etc/modules" | sudo sh;
-       else
-         EchoGreen "Kernel module autoload OK!";
+        then
+            EchoRed "Setting up kernel module autoload..."
+            echo "echo "batman-adv" >> /etc/modules" | sudo sh;
+        else
+            EchoGreen "Kernel module autoload OK!";
     fi
 }
 
@@ -329,18 +326,16 @@ then
     fi;
 else
     case "$1" in
-    "auto") InstallAuto && exit 0;;
-    "server") echo "server" && exit 0;;
-    "check") echo "check" && exit 0;;
-    "conn") InstallConnection && exit 0;;
-    "nm") InstallNetworkManager && exit 0;;
-    "mod") InstallBatmanAdv && exit 0;;
-    "ctl") InstallBatctl && exit 0;;
-    "alfred" ) InstallAlfred && exit 0;;
-    "logo") InstallLogo && exit 0;;
-    "test") exit 0;;
+        "auto") InstallAuto && exit 0;;
+        "server") echo "server" && exit 0;;
+        "check") echo "check" && exit 0;;
+        "conn") InstallConnection && exit 0;;
+        "nm") InstallNetworkManager && exit 0;;
+        "mod") InstallBatmanAdv && exit 0;;
+        "ctl") InstallBatctl && exit 0;;
+        "alfred" ) InstallAlfred && exit 0;;
+        "logo") InstallLogo && exit 0;;
+        "test") exit 0;;
     esac
-    Usage && exit 0;
+        Usage && exit 0;
 fi
-
-#read DUMB
