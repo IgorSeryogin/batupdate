@@ -68,7 +68,7 @@ CheckActualVersion () {
 
 CheckBatctlVersion () {
     BATCTL_VERSION=`batctl -v | cut -d" " -f 2`
-    local VALIDATION=`echo "$BATCTL_VERSION" | grep -E "^[0-9]{4}\.[0-9]\.[0-9]$"`
+    local VALIDATION=`echo "$BATCTL_VERSION" | grep -E "^[0-9]{4}\.[0-9]"`
     if [ -z "$VALIDATION" ];
        then BATCTL_VERSION="NA";
     fi
