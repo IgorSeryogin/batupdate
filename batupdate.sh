@@ -84,7 +84,7 @@ CheckBatmanAdvVersion () {
 
 CheckAlfredVersion () {
     ALFRED_VERSION=`alfred -v | head -n 1 | cut -d" " -f 2`
-    local VALIDATION=`echo "$ALFRED_VERSION" | grep -E "^[0-9]{4}\.[0-9]\.[0-9]$"`
+    local VALIDATION=`echo "$ALFRED_VERSION" | grep -E "^[0-9]{4}\.[0-9]$"`
     if [ -z "$VALIDATION" ];
        then ALFRED_VERSION="NA";
     fi
