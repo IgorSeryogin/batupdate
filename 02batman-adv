@@ -20,11 +20,8 @@ fi
 }
 
 wait_to_ping(){
-    try(){
-        ping -c 1 -w 1 8.8.8.8
-    }
     while [ "$?" != "0" ] ; do
-    try
+        ping -c 1 -w 1 8.8.8.8
     done
 }
 
