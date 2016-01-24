@@ -20,52 +20,45 @@ fi
 }
 
 wait_to_ping(){
-try(){
-        ping -c 1 -w 1 8.8.8.8;
-}
-        while [ "$?" != "0" ] ;
-        do
-                try;
-        done
+    try(){
+        ping -c 1 -w 1 8.8.8.8
+    }
+    while [ "$?" != "0" ] ; do
+    try
+    done
 }
 
 message_if_mesh(){
-        ESSID=`iwconfig $IF | grep ESSID | cut -d":" -f2 | sed s/\"//g`;
-        if [ $ESSID = "open-mesh.org" ];
-                 then
-	sudo -u $USER DISPLAY=$DISPLAY notify-send -i /etc/mesh/batlogo_black.svg "open-mesh.org" "Подключение к сети Интернет установлено!"
-        fi
+    ESSID=`iwconfig $IF | grep ESSID | cut -d":" -f2 | sed s/\"//g`
+    if [ $ESSID = "open-mesh.org" ]; then
+        sudo -u $USER DISPLAY=$DISPLAY notify-send -i /etc/mesh/batlogo_black.svg "open-mesh.org" "Подключение к сети Интернет установлено!"
+    fi
 }
 
-set_display;
+set_display
 
-	ESSID=`iwconfig $IF | grep ESSID | cut -d":" -f2 | sed s/\"//g`;
-	if [ $ESSID = "open-mesh.org" ]; 
-		then
-			ifconfig wlan0 mtu $MTU
-			batctl if add $IF
-			ifconfig bat0 up
-			batctl ap 1
-			batctl gw client
-#			echo 255 > /sys/class/net/bat0/mesh/hop_penalty
-			if [ -n "`ps -e | grep alfred`" ];
-				then 
-					killall alfred;
-			fi 
-			alfred -i bat0 -m &
-			if [ -n "`ps -e | grep batadv-vis`" ];
-				then 
-					killall batadv-vis;
-			fi 
-			batadv-vis -i bat0 -s &
-			if [ -n "`ps -e | grep dhclient`" ];
-				then 
-					killall dhclient;
-			fi 
-			dhclient bat0
-			wait_to_ping
-			message_if_mesh;
-		else
-			batctl if del $IF
-	fi
-
+ESSID=`iwconfig $IF | grep ESSID | cut -d":" -f2 | sed s/\"//g`;
+if [ $ESSID = "open-mesh.org" ];  then
+    ifconfig wlan0 mtu $MTU
+    batctl if add $IF
+    ifconfig bat0 up
+    batctl ap 1
+    batctl gw client
+    #   echo 255 > /sys/class/net/bat0/mesh/hop_penalty
+    if [ -n "`ps -e | grep alfred`" ]; then
+        killall alfred
+    fi
+    alfred -i bat0 -m &
+    if [ -n "`ps -e | grep batadv-vis`" ]; then
+        killall batadv-vis
+    fi 
+    batadv-vis -i bat0 -s &
+    if [ -n "`ps -e | grep dhclient`" ]; then
+        killall dhclient;
+    fi 
+    dhclient bat0
+    wait_to_ping
+    message_if_mesh
+else
+    batctl if del $IF
+fi
