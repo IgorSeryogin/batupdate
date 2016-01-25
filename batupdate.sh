@@ -1,7 +1,7 @@
 #!/bin/sh -e
 ##################################################################################
 # B.A.T.M.A.N. Advanced Automated Installaion and Update Script. GOSH, 2016
-# v2016012303
+# v2016012501
 ##################################################################################
 
 WORK_DIR="/tmp/batman-build"
@@ -150,30 +150,29 @@ PrintStat () {
 }
 
 Init () {
-    sudo mkdir $WORK_DIR;
+    sudo mkdir $WORK_DIR
 }
 
 Done () {
-    sudo rm -rf $WORK_DIR;
+    sudo rm -rf $WORK_DIR
 }
 
 InstallBatctl () {
-    local BATCTL_URL=http://downloads.open-mesh.org/batman/releases/batman-adv-$ACTUAL_VERSION/batctl-$ACTUAL_VERSION.tar.gz;
-    if [ "$BATCTL_VERSION" = "$ACTUAL_VERSION" ]; 
-        then
-            EchoGreen "Batctl OK!";
-        else
-            EchoRed "Batctl updating...";
-            Done;
-            Init;
-            sudo wget -qO $WORK_DIR/batctl.tar.gz $BATCTL_URL;
-            cd $WORK_DIR;
-            sudo tar -xf batctl.tar.gz;
-            cd $WORK_DIR/batctl-$ACTUAL_VERSION;
-            sudo make -j $CPU_THREADS;
-            sudo make install;
-            cd $PWD;
-            Done;
+    local BATCTL_URL=http://downloads.open-mesh.org/batman/releases/batman-adv-$ACTUAL_VERSION/batctl-$ACTUAL_VERSION.tar.gz
+    if [ "$BATCTL_VERSION" = "$ACTUAL_VERSION" ]; then
+        EchoGreen "Batctl OK!"
+    else
+        EchoRed "Batctl updating..."
+        Done
+        Init
+        sudo wget -qO $WORK_DIR/batctl.tar.gz $BATCTL_URL
+        cd $WORK_DIR
+        sudo tar -xf batctl.tar.gz
+        cd $WORK_DIR/batctl-$ACTUAL_VERSION
+        sudo make -j $CPU_THREADS
+        sudo make install
+        cd $PWD
+        Done
     fi
 }
 
