@@ -23,7 +23,7 @@ message_if_mesh(){
 
 set_display
 
-ESSID=`iwconfig $IF | grep ESSID | cut -d":" -f2 | sed s/\"//g`;
+ESSID=`iwconfig $IF | grep ESSID | cut -d":" -f2 | sed s/\"//g`
 if [ $ESSID = "open-mesh.org" ];  then
     ifconfig wlan0 mtu $MTU
     batctl if add $IF
@@ -40,7 +40,7 @@ if [ $ESSID = "open-mesh.org" ];  then
     fi 
     batadv-vis -i bat0 -s &
     if [ -n "`ps -e | grep dhclient`" ]; then
-        killall dhclient;
+        killall dhclient
     fi 
     dhclient bat0
     wait_to_ping
