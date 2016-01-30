@@ -1,7 +1,7 @@
 #!/bin/sh -e
 ##################################################################################
 # B.A.T.M.A.N. Advanced Automated Installaion and Update Script. GOSH, 2016
-# v2016012501
+# v2016013001
 ##################################################################################
 
 WORK_DIR="/tmp/batman-build"
@@ -29,7 +29,7 @@ EchoRed () {
 
 CheckBuild () {
     local PKG=`dpkg --get-selections | grep build-essential | grep install`
-    if [ -n    "$PKG" ]; then
+    if [ -n "$PKG" ]; then
         READY_TO_BUILD="y"
     else
         READY_TO_BUILD="n"
@@ -95,7 +95,7 @@ CheckDispatcherVersion () {
         fi
     else
         DISPATCHER_VERSION="NA"
-    fi 
+    fi
 }
 
 Check () {
@@ -146,7 +146,7 @@ PrintStat () {
     else
         EchoRed "Dispatcher Version: $DISPATCHER_VERSION"
     fi
-    echo "===================================="   
+    echo "===================================="
 }
 
 Init () {
@@ -300,9 +300,9 @@ PrintStat
 
 if [ "$#" -ne "1" ]; then
     if [ "$#" -ne "0" ]; then
-        Usage;
+        Usage
     else
-        InstallAuto;
+        InstallAuto
     fi;
 else
     case "$1" in
