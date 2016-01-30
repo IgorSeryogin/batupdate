@@ -5,7 +5,7 @@
 ##################################################################################
 
 WORK_DIR="/tmp/batman-build"
-SCRIPT_DIR="ftp://gosh.pp.ua/batman-adv/scripts"
+SCRIPT_DIR="https://raw.githubusercontent.com/IgorSeryogin/batupdate/gitbased"
 INTERNET_CONNECTED="n"
 READY_TO_BUILD="n"
 ACTUAL_VERSION="NA"
