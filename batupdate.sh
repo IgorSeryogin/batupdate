@@ -212,6 +212,7 @@ InstallAlfred () {
         EchoRed "Alfred updating..."
         Done
         Init
+        sudo apt-get install libcap-dev
         sudo wget -qO $WORK_DIR/alfred.tar.gz $ALFRED_URL
         cd $WORK_DIR
         sudo tar -xf alfred.tar.gz
