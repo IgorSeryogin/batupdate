@@ -1,12 +1,20 @@
 #!/bin/sh 
 ####################################################################
 # Mesh Network configuration script for Network Manager. GOSH, 2016 
-# v1.4.2
+# v1.5.0
 ###################################################################
 
 IF=$1
 STATUS=$2
 MTU="1532"
+USERS=`users | sed s," ","\n",g | sort | uniq`
+
+if [ -z "$DISPLAY" ]; then
+    console=`fgconsole`
+    dispnum=`ps t tty$console | sed -n -re 's,.*/X(org)? .*:([0-9]+).*,\2,p'`
+    # export DISPLAY=":$dispnum"
+    export DISPLAY=":0"
+fi
 
 wait_to_ping(){
     while [ "$?" != "0" ] ; do
@@ -17,7 +25,9 @@ wait_to_ping(){
 message_if_mesh(){
     ESSID=`iwconfig $IF | grep ESSID | cut -d":" -f2 | sed s/\"//g`
     if [ $ESSID = "open-mesh.org" ]; then
-        notify-send -i /etc/mesh/batlogo_black.svg "open-mesh.org" "Подключение к сети Интернет установлено!"
+        for USER in $USERS; do
+            sudo -u $USER notify-send -i /etc/mesh/batlogo_black.svg "open-mesh.org" "Подключение к сети Интернет установлено!"
+        done
     fi
 }
 
